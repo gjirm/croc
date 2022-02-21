@@ -5,12 +5,11 @@ COPY . .
 RUN go build -v -ldflags="-s -w"
 
 FROM alpine:latest
-EXPOSE 9009
-EXPOSE 9010
-EXPOSE 9011
-EXPOSE 9012
-EXPOSE 9013
-COPY --from=builder /go/croc/croc /go/croc/croc-entrypoint.sh /
+EXPOSE 10009
+EXPOSE 10010
+EXPOSE 10011
+EXPOSE 10012
+EXPOSE 10013
+COPY --from=builder /go/croc/croc /croc
 USER nobody
-ENTRYPOINT ["/croc-entrypoint.sh"]
-CMD ["relay"]
+CMD ["sh", "-c", "/croc --pass $CROC_PASS relay --ports 10009,10010,10011,10012,10013"]
